@@ -1,4 +1,4 @@
-# sanity-astro-previews
+# sanity-astro-preview
 
 ## Introduction
 
