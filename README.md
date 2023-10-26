@@ -39,3 +39,7 @@ It shows offline data persistence when you restart, and you'll also notice dynam
 # Documentation
 
 Fimd this in the apps and packages folders, including appropriate source takeouts.
+
+package:  https://github.com/narration-sd/sanity-astro-preview/blob/main/README.md
+
+app: https://github.com/narration-sd/sanity-astro-preview/blob/main/apps/example/README.md
