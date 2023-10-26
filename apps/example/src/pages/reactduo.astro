@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
+import AuthorViewReact from '../components/react/AuthorView'
+
+const authorQuery = `*[_type == "author"][0]{ ... }`
+const token = import.meta.env.PUBLIC_SANITY_VIEWER_TOKEN
+
+const clientConfig = {
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+  token: import.meta.env.PUBLIC_SANITY_VIEWER_TOKEN,
+  apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
+  useCdn: (process.env.NODE_ENV === 'production'),
+}
+
+if (!clientConfig.projectId) {
+  throw new Error ('clientConfig no projectId -- .env file missing?')
+}
+
+const aString = 'a string for your thoughts'
+const projectId = clientConfig.projectId
+---
+<Layout>
+  <h2>Dynamic React Duo Demo</h2>
+
+  <PreviewSubscription
+      query={authorQuery}
+      clientConfig={clientConfig}
+      token={clientConfig.token}
+      client:only="react"
+  />
+  <AuthorViewReact client:only="react"/>
+</Layout>

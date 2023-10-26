@@ -1,0 +1,53 @@
+{
+  "name": "@narration-sd/sanity-astro-preview",
+  "description": "Provide easy use of Sanity preview-kit for all Astro frameworks",
+  "private": false,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --mode development",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "main": "vite.config.js",
+  "module": "./dist/my-lib.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.umd.cjs"
+    }
+  },
+  "dependencies": {
+    "@sanity/preview-kit": "^3.2.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/narration-sd/sanity-astro-preview"
+  },
+  "keywords": [
+    "sanity",
+    "astro",
+    "preview-kit"
+  ],
+  "author": "Narration SD",
+  "license": "MIT"
+}

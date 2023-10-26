@@ -1,0 +1,15 @@
+{
+  "name": "@narration-sd/sanity-astro-preview",
+  "description": "Provide easy use of Sanity preview-kit for all Astro frameworks",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "turbo build"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.16"
+  }
+}

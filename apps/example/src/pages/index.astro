@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Assure from '../components/vue-components/assure.vue';
+import AssureS from '../components/svelte/assure.svelte';
+import AssureSo from '../components/solid/assure.jsx';
+import ShareActivitiesVue from "../components/vue-components/ShareActivities.vue";
+import ShareActivitiesSvelte from "../components/svelte/ShareActivities.svelte";
+---
+
+<Layout title="Nanostores Islands">
+  <main>
+    <h2 class="main-title">nanostores island communication, with api pulls</h2>
+    {/* Switch these next two out, to see Vue or Svelte api basis operate */}
+    <ShareActivitiesVue client:only="vue" />
+    <!--<ShareActivitiesSvelte client:only="svelte"/>-->
+    <Assure client:only="vue"/>
+    <AssureS client:only="svelte"/>
+    <AssureSo client:only="solid"/>
+    <br>
+    <p><i>(try a refresh, and you'll find your assurance is persisted,
+      as well as nanostore shared)</i></p>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 70ch;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+
+  .instructions {
+    line-height: 1.6;
+    margin: 1rem 0;
+    border: 1px solid rgba(var(--accent), 25%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+  }
+
+  .instructions code {
+    font-size: 0.875em;
+    font-weight: bold;
+    background: rgba(var(--accent), 12%);
+    color: rgb(var(--accent));
+    border-radius: 4px;
+    padding: 0.3em 0.45em;
+  }
+
+  .instructions strong {
+    color: rgb(var(--accent));
+  }
+
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .main-title {
+    color: darkred;
+  }
+</style>

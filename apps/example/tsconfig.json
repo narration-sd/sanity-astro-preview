@@ -1,0 +1,11 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "jsx": "preserve"
+  },
+  "types": ["vue", "react"]
+}
