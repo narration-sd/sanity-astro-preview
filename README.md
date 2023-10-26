@@ -28,11 +28,11 @@ React is the apparent first interest in community just now, so its demo app is a
 
 There's actually a VueJs alternate already running, which this preview system basis was developed on, and it will be included later once updated to use the package. Possibly a Svelte page will arrive also, a bit later.
 
-Operating the demo should be self-evident, as it will simply show a simply-formatted page having the contents of the Author schema, including text, an adjustable image, a list selector, and a Portable Text bio.
+Operating the demo should be self-evident, as it will simply show a quietly-formatted page having the contents of the Author schema, including text, an adjustable image, a list selector, and a Portable Text bio.
 
 ## islands-nanostores demo
 
-On its simple top-line menu, the app also includes the Nanostores Demo, an original validation from months ago which has multiple types of Astro islands communicating together, which you can demonstrate by using the buttons. 
+On its brief top-line menu, the app also includes the Nanostores Demo, an original validation from months ago which has multiple types of Astro islands communicating together. Here you can demonstrate by using the buttons. 
 
 It shows offline data persistence when you restart, and you'll also notice dynamic data events arriving from outside.
 
@@ -40,6 +40,6 @@ It shows offline data persistence when you restart, and you'll also notice dynam
 
 Fimd this in the apps and packages folders, including appropriate source takeouts.
 
-package:  https://github.com/narration-sd/sanity-astro-preview/blob/main/README.md
+package:  https://github.com/narration-sd/sanity-astro-preview/blob/main/packages/sanity-astro-preview/README.md
 
-app: https://github.com/narration-sd/sanity-astro-preview/blob/main/apps/example/README.md
+example app: https://github.com/narration-sd/sanity-astro-preview/blob/main/apps/example/README.md
