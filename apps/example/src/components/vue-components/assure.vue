@@ -21,7 +21,7 @@ export default {
       settings,
     }
   },
-  name: "assure",
+  name: "assureSolid",
   props: {
     class: { type: String, default: 'what is this class for?'}
   },

@@ -10,7 +10,7 @@ const assure = (status, event) => {
 
 <div>
 <h2 class="subtitle">Then from Svelte...</h2>
-    <h2>Am I assured? It seems { $eSettings.assurance }</h2>
+    <h2>Does Svelte feel assured? It seems { $eSettings.assurance }</h2>
     <h4>my activity is: { $eSettings.activity }</h4>
     <button on:click={(event) => assure("in question", event)}>Question it</button>
     <button on:click={ (event) => assure('assured', event) }>Be Assured</button>

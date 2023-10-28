@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Assure from '../components/vue-components/assure.vue';
+import AssureR from '../components/react/assure-react.jsx';
 import AssureS from '../components/svelte/assure.svelte';
-import AssureSo from '../components/solid/assure.jsx';
+import AssureSo from '../components/solid/assure-solid.jsx';
 import ShareActivitiesVue from "../components/vue-components/ShareActivities.vue";
 import ShareActivitiesSvelte from "../components/svelte/ShareActivities.svelte";
 ---
@@ -14,8 +15,9 @@ import ShareActivitiesSvelte from "../components/svelte/ShareActivities.svelte";
     <ShareActivitiesVue client:only="vue" />
     <!--<ShareActivitiesSvelte client:only="svelte"/>-->
     <Assure client:only="vue"/>
+    <AssureR client:only="react"/>
     <AssureS client:only="svelte"/>
-    <AssureSo client:only="solid"/>
+    <AssureSo client:only="solid-js"/>
     <br>
     <p><i>(try a refresh, and you'll find your assurance is persisted,
       as well as nanostore shared)</i></p>
@@ -40,7 +42,7 @@ import ShareActivitiesSvelte from "../components/svelte/ShareActivities.svelte";
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 400%;
-    background-position: 0%;
+    background-position: 0;
   }
 
   .instructions {
