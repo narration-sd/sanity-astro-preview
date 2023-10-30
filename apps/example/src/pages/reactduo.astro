@@ -3,7 +3,8 @@ import Layout from '../layouts/Layout.astro'
 import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
 import AuthorViewReact from '../components/react/AuthorView'
 
-const authorQuery = `*[_type == "author"][0]{ ... }`
+const query = `*[_type == $type ][0]{ ... }`
+const params = { type: 'author'}
 const token = import.meta.env.PUBLIC_SANITY_VIEWER_TOKEN
 
 const clientConfig = {
@@ -24,8 +25,10 @@ const projectId = clientConfig.projectId
 <Layout>
   <h2>Dynamic React Duo Demo</h2>
 
+  <!-- you can add a 'show' prop, to get on-page debugging -->
   <PreviewSubscription
-      query={authorQuery}
+      query={query}
+      params={params}
       clientConfig={clientConfig}
       token={clientConfig.token}
       client:only="react"
