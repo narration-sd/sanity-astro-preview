@@ -38,7 +38,9 @@ It shows offline data persistence when you restart, and you'll also notice dynam
 
 # Documentation
 
-Fimd this in the apps and packages folders, including appropriate source takeouts.
+There's now the beginning of a full Guides and Referencs documentation site [available online here](https://encoundel.com/docs)
+
+You can also look locally for information in the apps and packages folders.
 
 package:  https://github.com/narration-sd/sanity-astro-preview/blob/main/packages/sanity-astro-preview/README.md
 

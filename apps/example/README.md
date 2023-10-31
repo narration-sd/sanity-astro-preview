@@ -1,4 +1,4 @@
-# Introduction for the `example` app
+# Introduction for the `apps/example` app
 
 We've explained some aspects of the development environment in the overall Readme, so let's just jump in to what comes next -- which will be the same for an actual production previewer you would construct.
 
@@ -32,7 +32,7 @@ With these in place, you could put the Studio and the app up in side-by-side win
 
 To run the preview demo, use `npm run dev` or `npm run preview` depending on whether you've built, and select the **_React Preview with Kit_** button at the top of the page.
 
-There will be a movie available on Slack to see how this would appear and operate, before you might work up this example yourself.
+There's a movie available on Slack, [here](https://sanity-io-land.slack.com/archives/C04B7GG8YNQ/p1698305553712789), to see how this would appear and operate, before you might work up this example yourself.
 
 ## islands-nanostores demo
 
