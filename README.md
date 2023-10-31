@@ -10,11 +10,13 @@ However, what's presented today works, and works well, fully equivalent to earli
 
 ## Introduction
 
-The `@narration-sd/sanity-astro-preview` package implements Sanity's `preview-kit` so that it can be used easily with any of the development frameworks Astro makes available, such as React, VueJs, Svelte, Solid, etc..
+The `@narration-sd/sanity-astro-preview` package implements Sanity's `preview-kit` so that it can be used easily with any of the development frameworks Astro presently makes available, such as React, VueJs, Svelte, Solid, etc..
 
-It does this by delivering preview data to chosen Astro islands via Nanostoress, from its own React component. 
+It does this by delivering preview data to chosen Astro islands via Nanostoress, from its own React component.
 
-You simply include the visually silent component with your viewing component in an Astro page. The viewer needs only to include a single line to gain the previews, which reactively follow Sanity Data Lake updates that editing drafts in Studio make.
+You simply include the visually silent subscription component with your viewing component, in an Astro page.
+
+Your viewer coding needs only to include a single line to gain the previews, which reactively follow Sanity Data Lake updates, as editing drafts in Studio immediately provides.
 
 ## Package and Demo project
 
@@ -38,7 +40,7 @@ It shows offline data persistence when you restart, and you'll also notice dynam
 
 # Documentation
 
-There's now the beginning of a full Guides and Referencs documentation site [available online here](https://encoundel.com/docs)
+There's now the beginning of a full Guides and Referencs documentation site, including Search, [available online here](https://encoundel.com/docs)
 
 You can also look locally for information in the apps and packages folders.
 

@@ -1,10 +1,10 @@
-## Introduction to sanity-astro-preview
+## Introduction to `sanity-astro-preview`
 
 Just bullet points at moment...tbd
 
-- in React, but works with any Astro-capable framework -- Vue, Svelte, Solid, etc..
+- an example here is in React, but works with any present Astro-capable framework -- Vue, Svelte, Solid, etc..
 
-- connectivity all arranged internally, requiring 1 code line in a using application page to get the preview data
+- connectivity is all arranged internally, requiring 1 code line in a using application page to get the preview data
 
 - preview package wire size: ~58 KB
 
@@ -49,21 +49,28 @@ const aString = 'a string for your thoughts'
 const projectId = clientConfig.projectId
 ---
   <Layout>
-    <h2>Dynamic React Duo Demo</h2>
+    <h2>Dynamic React Demo</h2>
 
-<!-- you can add a 'show' prop, to get on-page debugging -->
-<PreviewSubscription
-query={query}
-params={params}
-clientConfig={clientConfig}
-token={clientConfig.token}
-client:only="react"
-  />
-  <AuthorViewReact client:only="react"/>
+    <!-- you can add a 'show' prop, to get on-page debugging -->
+    <PreviewSubscription
+        query={query}
+        params={params}
+        clientConfig={clientConfig}
+        token={clientConfig.token}
+        client:only="react" 
+     />
+          
+     <AuthorViewReact client:only="react"/>
   </Layout>
 ```
 
-### Your viewing component
+### Extra help possible
+
+Along the way, you might find it useful to temporarily add the extra `show` prop on the `PreviewSubscription` -- it can put a lot of information as to what's happening on screen.
+
+This monitoring text will appear above your own output, so you'll remove it as you complete, making the subscription silent on the page again.
+
+## Your Viewing component
 
 This can be any component in an Astro-compatible framework that you prefer, so long as you configure it to run only in the client.
 
