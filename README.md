@@ -40,7 +40,7 @@ It shows offline data persistence when you restart, and you'll also notice dynam
 
 # Documentation
 
-There's now the beginning of a full Guides and Referencs documentation site, including Search, [available online here](https://encoundel.com/docs)
+There's now the beginning of a full Guides and Referencs documentation site, including Search, available online at [https://encounsel.com/docs](https://encounsel.com/docs).
 
 You can also look locally for information in the apps and packages folders.
 
