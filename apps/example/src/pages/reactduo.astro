@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
-import AuthorViewReact from '../components/react/AuthorView'
+import { AuthorView as AuthorViewReact } from '../components/react/AuthorView'
 
 const query = `*[_type == $type ][0]{ ... }`
 const params = { type: 'author'}

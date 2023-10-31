@@ -6,7 +6,7 @@ import {getSanityImageURL, formatBlogPostDate} from '../../utils/helpers'
 import SanityPortableText from './SanityPortableText.tsx'
 import './author.css' // *todo a rather temporary measure...
 
-export default function AuthorView(props: any) {
+export const AuthorView = (props: any) => {
   const pageData: any = useStore(eAtomData)
 
   const imageUrl = (theAuthor: any) => {

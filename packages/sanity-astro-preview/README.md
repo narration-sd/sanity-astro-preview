@@ -28,7 +28,7 @@ You can see how this works, using the required `client:only="framework"`, in thi
 ---
 import Layout from '../layouts/Layout.astro'
 import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
-import AuthorViewReact from '../components/react/AuthorView'
+import { AuthorView as AuthorViewReact } from '../components/react/AuthorView'
 
 const authorQuery = `*[_type == "author"][0]{ ... }`
 
@@ -113,7 +113,7 @@ import {getSanityImageURL, formatBlogPostDate} from '../../utils/helpers'
 import SanityPortableText from './SanityPortableText.tsx'
 import './author.css' // *todo a rather temporary measure...
 
-export default function AuthorView(props: any) {
+export const AuthorView = (props: any) => {
   const pageData:any = useStore(eAtomData)
 
   const imageUrl = (theAuthor: any) => {
