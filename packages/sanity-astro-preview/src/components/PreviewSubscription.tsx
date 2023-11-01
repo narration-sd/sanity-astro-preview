@@ -1,10 +1,13 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
+import type { CSSProperties } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { createClient } from '@sanity/client'
 import { LiveQueryProvider, useLiveQuery } from '@sanity/preview-kit'
 
 import { eAtomData } from '../store/atomData.ts'
+
+const InitContext = createContext({})
 
 const ErrorFallback = (props) => {
   const { error } = props
@@ -23,6 +26,8 @@ const SharerChild = (props) => {
   const [previewData, loading]
     = useLiveQuery(initialData, query, params)
   const msg = loading ? 'loading...' : 'updated'
+  const iniData = useContext(InitContext)
+  console.log('iniData: ' + JSON.stringify(iniData))
 
   if (previewData) {
     
@@ -100,9 +105,12 @@ export const PreviewSubscription = (props) => {
     let ignore = false; // this is the React anti-race trick...
 
     const getData = async () => {
-      await client.fetch(query, params)
+       await client.fetch(query, params)
         .then((json) => {
           if (!ignore) {
+            if (!json) {
+              throw new Error('No Data')
+            }
             setInitialData(json)
           }
         })
@@ -115,7 +123,7 @@ export const PreviewSubscription = (props) => {
         })
     }
 
-    getData()
+    getData() // *todo* revisit here
     return () => {
       ignore = true;
     };
@@ -127,31 +135,33 @@ export const PreviewSubscription = (props) => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div>
-        {
-          queryError
-            ? <h3>Query Error: {queryError}</h3>
-            : <div style={showStyle}>
-              <h2>This is a PreviewSubscription on {JSON.stringify(eAtomData.value)}</h2>
-              <h3>
-                query is: {query},
-                params are: {JSON.stringify(params)},
-                previewDrafts is: {previewDrafts ? 'true' : 'false'},
-                initialData was:
-              </h3>
-              <p>{JSON.stringify(initialData)}</p>
+      <InitContext.Provider value={{initialData, query, params, clientConfig, previewDrafts }}>
+        <div>
+          {
+            queryError
+              ? <h3>Query Error: {queryError}</h3>
+              : <div style={showStyle}>
+                <h2>This is a PreviewSubscription on {JSON.stringify(eAtomData.value)}</h2>
+                <h3>
+                  query is: {query},
+                  params are: {JSON.stringify(params)},
+                  previewDrafts is: {previewDrafts ? 'true' : 'false'},
+                  initialData was:
+                </h3>
+                <p>{JSON.stringify(initialData)}</p>
 
-              <OperateQuery
-                query={query}
-                params={params}
-                client={client}
-                token={clientConfig.token}
-                previewDrafts={previewDrafts}
-                initialData={initialData}
-              />
-            </div>
-        }
-      </div>
+                <OperateQuery
+                  query={query}
+                  params={params}
+                  client={client}
+                  token={clientConfig.token}
+                  previewDrafts={previewDrafts}
+                  initialData={initialData}
+                />
+              </div>
+          }
+        </div>
+      </InitContext.Provider>
     </ErrorBoundary>
   )
 }
