@@ -103,6 +103,9 @@ export const PreviewSubscription = (props) => {
       await client.fetch(query, params)
         .then((json) => {
           if (!ignore) {
+            if (!json) {
+              throw new Error('No Data Returned')
+            }
             setInitialData(json)
           }
         })
