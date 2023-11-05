@@ -1,2 +1,8 @@
-export { PreviewSubscription } from './components/PreviewSubscription.tsx'
-export { eAtomData } from "./store/atomData.ts"
+export {
+  PreviewSubscription,
+  type PreviewKitConfig,
+} from './components/PreviewSubscription.tsx'
+export {
+  ePreviewData,
+  type PreviewType
+} from "./store/atomData.ts"

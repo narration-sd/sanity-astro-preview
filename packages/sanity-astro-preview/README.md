@@ -110,7 +110,7 @@ In React, it looks like this:
 
 ```typescript jsx
 // be sure not to forget this -- it's your data connection!
-import {eAtomData} from '@narration-sd/sanity-astro-preview'
+import {ePreviewData} from '@narration-sd/sanity-astro-preview'
 import {useStore} from '@nanostores/react'
 
 import {getSanityImageURL, formatBlogPostDate} from '../../utils/helpers'
@@ -118,7 +118,7 @@ import SanityPortableText from './SanityPortableText.tsx'
 import './author.css' // *todo a rather temporary measure...
 
 export const AuthorView = (props: any) => {
-  const pageData: any = useStore(eAtomData)
+  const pageData: any = useStore(ePreviewData)
 
   const imageUrl = (theAuthor: any) => {
     const url = theAuthor.image
@@ -197,7 +197,7 @@ A few things to keep in mind for the page and your component in it:
 
 ```typescript jsx
 // be sure not to forget this -- it's your data connection!
-import {eAtomData} from '@narration-sd/sanity-astro-preview'
+import {ePreviewData} from '@narration-sd/sanity-astro-preview'
 import {useStore} from '@nanostores/react'
 
 import {getSanityImageURL, formatBlogPostDate} from '../../utils/helpers'
@@ -205,7 +205,7 @@ import SanityPortableText from './SanityPortableText.tsx'
 import './author.css' // *todo a rather temporary measure...
 
 export const AuthorView = (props: any) => {
-  const pageData:any = useStore(eAtomData)
+  const pageData:any = useStore(ePreviewData)
 
   const imageUrl = (theAuthor: any) => {
     const url = theAuthor.image

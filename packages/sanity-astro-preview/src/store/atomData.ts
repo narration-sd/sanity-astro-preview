@@ -1,11 +1,12 @@
 import { atom } from 'nanostores'
 
-export type AtomAuthValues = {
-    name: string,
-    bio: object
+export type PreviewType = {
+    previewData: object,
+    loading: boolean
 }
 
-export const eAtomData
-  = atom({
-    previewDataObj: { initialized: 'no data' }
+export const ePreviewData
+  = atom<PreviewType>({
+    previewData: { initialized: 'no data' },
+    loading: false
   })

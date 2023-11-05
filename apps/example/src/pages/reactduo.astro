@@ -3,34 +3,25 @@ import Layout from '../layouts/Layout.astro'
 import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
 import { AuthorView as AuthorViewReact } from '../components/react/AuthorView'
 
+// now you bring these in conveniently and for multiple preview pages
+import { clientConfig, kitConfig } from '../../previewKitConfig'
+
 const query = `*[_type == $type ][0]{ ... }`
 const params = { type: 'author'}
-const token = import.meta.env.PUBLIC_SANITY_VIEWER_TOKEN
-
-const clientConfig = {
-  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
-  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
-  token: import.meta.env.PUBLIC_SANITY_VIEWER_TOKEN,
-  apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
-  useCdn: (process.env.NODE_ENV === 'production'),
-}
 
 if (!clientConfig.projectId) {
-  throw new Error ('clientConfig no projectId -- .env file missing?')
+  throw new Error ('clientConfig no projectId -- is .env file missing?')
 }
 
-const aString = 'a string for your thoughts'
 const projectId = clientConfig.projectId
 ---
 <Layout>
-  <h2>Dynamic React Duo Demo</h2>
-
-  <!-- you can add a 'show' prop, to get on-page debugging -->
+  <!-- you can add a 'show' prop, no value, to get on-page debugging -->
   <PreviewSubscription
       query={query}
       params={params}
       clientConfig={clientConfig}
-      token={clientConfig.token}
+      kitConfig={kitConfig}
       client:only="react"
   />
   <AuthorViewReact client:only="react"/>

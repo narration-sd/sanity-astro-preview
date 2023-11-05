@@ -2,17 +2,26 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import type { CSSProperties } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { createClient } from '@sanity/client'
+import { createClient, QueryParams, type ClientConfig } from '@sanity/client'
 import { LiveQueryProvider, useLiveQuery } from '@sanity/preview-kit'
 
-import { eAtomData } from '../store/atomData.ts'
+import { ePreviewData, type PreviewType } from '../store/atomData.ts'
 
-const InitContext = createContext({})
+export type PreviewKitConfig = {
+  perspective?:string,
+}
+
+type InitData = {
+  clientConfig: object,
+  initialData: object,
+  params: QueryParams,
+  kitConfig:object,
+  query: string
+}
+const InitContext = createContext<InitData>({} as InitData)
 
 const ErrorFallback = (props) => {
   const { error } = props
-  // console.log('ErrorBoundary called, props: ' + JSON.stringify(error))
-  // const err = JSON.stringify(error)
   return (
     <>
       <h1>Unexpected Error</h1>
@@ -21,25 +30,26 @@ const ErrorFallback = (props) => {
   )
 }
 
-const SharerChild = (props) => {
-  const { preAuthor:initialData, query, params } = props
+const SharerChild = (/*props*/) => {
+  const {
+    initialData = {},
+    query= '',
+    params= {}
+  } = useContext(InitContext)
+
   const [previewData, loading]
     = useLiveQuery(initialData, query, params)
   const msg = loading ? 'loading...' : 'updated'
-  const iniData = useContext(InitContext)
-  console.log('iniData: ' + JSON.stringify(iniData))
 
   if (previewData) {
     
-    // let's add in the loading flag, if useful
-    const previewDataWithLoading =
-      Object.assign(previewData, {
-        loading: loading
-      })
-
-    // here's the whole plot point...
-    // console.log('plot point, set previewData...'
-    eAtomData.set(previewDataWithLoading)
+    const completePreview:PreviewType = {
+      previewData: previewData,
+      loading: loading
+    }
+    
+    // here's the entire plot point...
+    ePreviewData.set(completePreview)
   }
 
   return ( /* (loading notification is taken care of via the msg) */
@@ -53,7 +63,9 @@ const SharerChild = (props) => {
           : <>
               <h2>No Live Preview Data was returned...({msg})</h2>
               <h3>Query error is likely, on query: {query},
-                params: {JSON.stringify(params)}</h3>
+                params: {JSON.stringify(params)},
+                or try 'show' prop on PreviewSubscription
+              </h3>
             </>
       }
     </>
@@ -61,17 +73,13 @@ const SharerChild = (props) => {
 }
 
 const OperateQuery = (props) => {
-  const { query, params,  client, token, initialData } = props
+  const { /*query, params,*/  client, token, /*initialData*/ } = props
 
   const children =
-    <SharerChild
-      preAuthor={initialData}
-      query={query}
-      params={params}
-    />
+    <SharerChild />
 
   return (
-    <LiveQueryProvider
+    <LiveQueryProvider  // *todo* revisit about extra token prop...
       client={client}
       token={token}
       logger={console}
@@ -81,31 +89,75 @@ const OperateQuery = (props) => {
   )
 }
 
-export const PreviewSubscription = (props) => {
+// this prepares us for any options that may arrive, checkign and assempling
+const assembleFetchOptions = (
+  kitConfig:PreviewKitConfig,
+  clientConfig:ClientConfig,
+):object => {
+
+  if (Object.keys(clientConfig).length === 0 ||
+    (kitConfig.perspective === 'previewDrafts' && !clientConfig.token)) {
+
+    const msg = 'You need to provide a clientConfig, ' +
+      'including a Viewer token if you want to preview Drafts...'
+    throw new Error(msg)
+  }
+
+  // expandable on this if further preview-kit abilities need so
+  const  fullFetchOptions =
+    Object.assign({},
+    kitConfig.perspective === 'previewDrafts'
+      ? {
+        perspective: kitConfig.perspective,
+        token:clientConfig.token,
+      }
+      : {})
+  return fullFetchOptions;
+}
+
+export type SubscriptionProps = {
+  query:string,
+  params:QueryParams,
+  clientConfig: {
+    projectId: string,
+    dataset: string,
+    token:string,
+    apiVersion: string,
+    useCdn: boolean,
+  },
+  kitConfig: PreviewKitConfig,
+  show:boolean
+}
+
+export const PreviewSubscription = (props:SubscriptionProps) => {
 
   const {
-    query, params = {}, clientConfig, previewDrafts = true,
-    show = false } = props // *todo* true previewDrafts?
-
-  if (!clientConfig || !clientConfig.token) {
-    const msg = 'You need to provide a clientConfig, ' +
-      'including a token able to read Drafts...'
-    console.log(msg)
-    throw new Error (msg)
-  }
+    query= '',
+    params = {},
+    clientConfig = { token: null},
+    kitConfig = {
+      perspective: 'previewDrafts',
+    },
+    show = false
+  } = props
 
   const [ initialData, setInitialData ] = useState(null);
   const [ queryError, setQueryError ] = useState(null);
 
-  // *todo* revert this to api provider, so LiveQuery points get
-  // *todo* included -- possibly driven also from this component's props
   const client = createClient(clientConfig)
+  const fetchOptions = assembleFetchOptions(kitConfig, clientConfig)
 
+  /*
+   We accomplish two things with this initial direct data access:
+   - the current live data, if any, for preview-kit's use and our show prop
+   - validation that there isn't something the matter with the query, as
+     preview-kit doesn't seem to present errors, just null results
+   */
   useEffect (() => {
     let ignore = false; // this is the React anti-race trick...
 
     const getData = async () => {
-       await client.fetch(query, params)
+       await client.fetch(query, params, fetchOptions)
         .then((json) => {
           if (!ignore) {
             if (!json) {
@@ -135,28 +187,26 @@ export const PreviewSubscription = (props) => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <InitContext.Provider value={{initialData, query, params, clientConfig, previewDrafts }}>
+      <InitContext.Provider value={{
+        initialData, query, params, clientConfig, kitConfig,
+      }}>
         <div>
           {
             queryError
               ? <h3>Query Error: {queryError}</h3>
               : <div style={showStyle}>
-                <h2>This is a PreviewSubscription on {JSON.stringify(eAtomData.value)}</h2>
+                <h2>This is a PreviewSubscription on {JSON.stringify(ePreviewData)}</h2>
                 <h3>
                   query is: {query},
                   params are: {JSON.stringify(params)},
-                  previewDrafts is: {previewDrafts ? 'true' : 'false'},
+                  perspective is: {kitConfig.perspective},
                   initialData was:
                 </h3>
                 <p>{JSON.stringify(initialData)}</p>
 
                 <OperateQuery
-                  query={query}
-                  params={params}
                   client={client}
                   token={clientConfig.token}
-                  previewDrafts={previewDrafts}
-                  initialData={initialData}
                 />
               </div>
           }
