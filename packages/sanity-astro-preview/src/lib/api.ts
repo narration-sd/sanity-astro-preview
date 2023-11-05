@@ -1,18 +1,8 @@
 import { createClient } from '@sanity/client'
 import type { QueryParams } from '@sanity/client'
 
-// *todo now that we know how to use it, see about bringing back in. For features, and cleanere
-// const clientConfig = {
-//   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
-//   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
-//   token: import.meta.env.PUBLIC_SANITY_EDITOR_TOKEN, // actually only viewer req'd for preview...
-//   apiVersion: import.meta.env.PUBLIC_SANITY_API_VERSION,
-//   useCdn: false, // (process.env.NODE_ENV === 'production'), // *todo* for local dev
-// }
-//
-// if (!clientConfig.projectId) {
-//   throw new Error ('main no projectId')
-// }
+// *todo* we're not using this file -- For features, arg checks, and cleanere,
+// *todo now that we know what shapes are, see about bringing back in.
 
 let client = null
 export const setupClient = (clientConfig) => {
@@ -48,6 +38,7 @@ export type SanityFetchArgs = {
   token:string
 }
 // Utility for fetching data on the server, that can toggle between published and preview drafts
+// *todo* move handling for client and fetch on kit flags out to here and use it
 export async function
   sanityFetch<QueryResponse>({
                                query,
