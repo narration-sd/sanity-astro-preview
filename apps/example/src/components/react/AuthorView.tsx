@@ -60,12 +60,6 @@ export const AuthorView = (props: any) => {
               </div>
             </div>
           </article>
-
-          {/* *todo* ditto, do we want to show/not show any of this,*/}
-          {/* *todo*as with the Subscription?*/}
-          {/*<h2>This is an Author View in React, {val}</h2>*/}
-          {/*<h3>Here's the live data: { pageData.name }</h3>*/}
-          {/*<h3>AtomAuth: { JSON.stringify(pageData ) }</h3>*/}
         </div>
       }
     </div>
