@@ -12,6 +12,8 @@ export const AuthorView = (props: any) => {
     loading
   } = useStore(ePreviewData) as PreviewType
 
+  const isLoading = loading ? '(connecting...)' : ''
+
   const imageUrl = (theAuthor: any) => {
     const url = theAuthor.image
       ? getSanityImageURL(theAuthor.image).width(360).url()
@@ -21,10 +23,10 @@ export const AuthorView = (props: any) => {
   return (
     <div>
       {
-        typeof pageData._originalId !== 'undefined' &&
+        typeof pageData.slug !== 'undefined' &&
         <div>
           <article className="theAuthor-preview__article">
-            <h2>Author Live (React)</h2>
+            <h2>Author Live (React) { isLoading }</h2>
             <div className="theAuthor-block">
               <div className="theAuthor-row">
                 <img className="theAuthor-main__img" loading="lazy"
