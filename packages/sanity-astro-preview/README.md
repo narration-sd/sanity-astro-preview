@@ -1,16 +1,33 @@
 ## Introduction to `sanity-astro-preview`
 
-Just bullet points at moment...tbd
+This is package to provide Sanity's primary Live Preview package, `previww-kit`, transparently and simply in Astro projects.
 
-- an example here is in React, but works with any present Astro-capable framework -- Vue, Svelte, Solid, etc..
+There's a [Guides, Reference, and Faqs site](https://encounsel.com/docs) which will probably be most helpful in using it.
 
-- connectivity is all arranged internally, requiring 1 code line in a using application page to get the preview data
+Here are some features:
 
-- preview package wire size: ~58 KB
+- Should work to provide Live Previews for all component frameworks Astro and Nano Stores mutually support. At present this means React, VueJS, Svelte, Solid, Preact, Lit, and Angular (via the `@analogjs/astro-angular` integration)
 
-- the subscription component props are likely self-evident, but will be doc'd here
+- It's been tested so far on React and VueJs, and you can see some early demo code (soon improved) for those in the [GitHub Site](https://github.com/narration-sd/sanity-astro-preview) `apps/example` folder.
 
-- there's pretty comprehensive error-handling, along with a `show` ability to put debug information on screen, when that can help out with your development
+- The package size is small (11kB), and applying it to your code to gain Live Previews needs only a few simple lines.
+
+- As in the examples, you'll simply add a visually silent `<PreviewSubscription />` component to your page to gain the preview data.
+
+- there's comprehensive error-handling, along with a `show` ability to put debug information on screen, when that could help out with your development
+
+### What's needed for Astro Live Previews
+
+There are many advantages Astro makes possible, not the least of which is writing much of your site in it's own simple `.astro` format.
+
+Live Previews will fit right in, but however you arrange this, including this package, you're going to need framework components which can run on the browser client, to successfully display them.
+
+The [docs site](https://encounsel.com/docs) will lead you through understandings about this, and lays out a sensible procedure for building up those abilities where your Astro pages need them, an easy step at a time. 
+
+The `/apps/example` code illustrates a simple conversion, and soon there will be a model there also of the time-saving 'components-in-components' way it adds, for efficiently doing this.
+
+The rest of this Readme shows early patterns, and will be updated, but your best and most recent information will be found on the [docs site](https://encounsel.com/docs). 
+
 ## Usage
 
 ### The PreviewSubscription component

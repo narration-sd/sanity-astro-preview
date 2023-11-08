@@ -1,12 +1,12 @@
 # sanity-astro-preview
 
-## Preface
+## Published
 
-There needs to be one for the moment, as this is all a first pass. Develompent is still under way, and will try to be responsive to comments. 
+The package this repo includes and is based on has now been published on NpmJs, so you can install it directly in your projects.
 
-There are also a few <preview-kit> configurations not yet fully implemented, and a bit more refactoring to be done around the internal libraries which will include supporting them.
+There's a [Guides, Reference, and Faqs site](https://encounsel.com/docs) which will probably be most helpful in using it.
 
-However, what's presented today works, and works well, fully equivalent to earlier `groq-store` use, and with all `preview-kit`'s advantages, which has been the goal.
+Readmes here will catch up, including this one(!)
 
 ## Introduction
 
@@ -26,9 +26,13 @@ The structure with /apps and /packages is used so that Turborepo can operate, an
 
 ## Development Demo app
 
-React is the apparent first interest in community just now, so its demo app is a pretty clean version, using the package.
+React is the apparent first interest in community just now, so its demo page in the `apps/example` is a pretty clean if simple illustration, using the package.
 
-There's actually a VueJs alternate already running, which this preview system basis was developed on, and it will be included later once updated to use the package. Possibly a Svelte page will arrive also, a bit later.
+VueJs is also a great framework to use with Astro, and there's an identical-abilities page ro it also.
+
+Both of these illustrate the first, simplest conversion pattern [suggested on the docs site](https://encounsel.com/docs/faqs/50-making-it-easy/), which goes nicely step-by-step. 
+
+There will soon also be examples of the efficient and just as simple `components-in-component` way to do this.
 
 Operating the demo should be self-evident, as it will simply show a quietly-formatted page having the contents of the Author schema, including text, an adjustable image, a list selector, and a Portable Text bio.
 

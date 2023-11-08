@@ -2,12 +2,12 @@
   "name": "@narration-sd/sanity-astro-preview",
   "description": "Provide easy use of Sanity preview-kit for all Astro frameworks",
   "private": false,
-  "version": "0.3.0",
+  "version": "0.3.2",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build --mode development",
+    "build": "npm run clean && tsc && vite build --mode development",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "clean": "rimraf dist",
+    "publish": "npm run build && npm publish --access public"
   },
   "type": "module",
   "main": "vite.config.js",
@@ -36,6 +36,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "rimraf": "^5.0.5",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vite-plugin-dts": "^3.6.2"
