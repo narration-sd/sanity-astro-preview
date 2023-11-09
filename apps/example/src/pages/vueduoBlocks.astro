@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
+import AuthorViewBlocks from '../components/vue-components/AuthorViewBlocks.vue'
+
+// now you bring these in conveniently and for multiple preview pages
+import { clientConfig, kitConfig } from '../../previewKitConfig'
+
+const query = `*[_type == $type ][0]{ ... }`
+const params = { type: 'author'}
+
+if (!clientConfig.projectId) {
+  throw new Error ('clientConfig no projectId -- is .env file missing?')
+}
+
+const projectId = clientConfig.projectId
+---
+<Layout>
+  <!-- you can add a 'show' prop, no value, to get on-page debugging -->
+  <PreviewSubscription
+      query={query}
+      params={params}
+      clientConfig={clientConfig}
+      kitConfig={kitConfig}
+      client:only="react"
+  />
+  <AuthorViewBlocks client:only="vue"/>
+</Layout>

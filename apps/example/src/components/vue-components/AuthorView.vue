@@ -28,7 +28,7 @@ const imageUrl = (theAuthor) => {
 
 <template>
   <div v-if="pageData.slug">
-    <article class="theAuthor-preview__article">
+    <article>
       <h2>Author Live (Vue) {{ loading }}</h2>
       <div class="theAuthor-block">
         <div class="theAuthor-row">
