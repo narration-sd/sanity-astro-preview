@@ -1,0 +1,36 @@
+[build]
+  command = "npm run build"
+  framework = "astro"
+  functions = "netlify/functions"
+#  functions = "functions" # netlify dev uses this directory to scaffold and serve your functions
+  publish = "/dist"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = false
+  minify = false
+
+[build.processing.js]
+  bundle = true
+  minify = false
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+[functions]
+  node_bundler = "esbuild"
+#  external_node_modules = ["astro"]
+
+[dev]
+  framework = "astro"
+
+# this next tames netlify, we hope
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200

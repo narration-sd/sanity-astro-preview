@@ -26,3 +26,6 @@ dist-ssr
 # turbo, build systems
 .turbo/
 
+
+# Local Netlify folder
+.netlify
