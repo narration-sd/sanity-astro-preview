@@ -2,7 +2,7 @@
   "name": "@narration-sd/sanity-astro-preview",
   "description": "Provide easy use of Sanity preview-kit for all Astro frameworks",
   "private": false,
-  "version": "0.3.2",
+  "version": "0.3.3",
   "scripts": {
     "build": "npm run clean && tsc && vite build --mode development",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

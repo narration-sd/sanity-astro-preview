@@ -1,9 +1,8 @@
 <template>
   <div class="theAuthor-block">
     <div class="theAuthor-row">
-<!--      <SanityImage :pageData="pageData.image"/>-->
       <slot />
-      <h3>{{ name }}</h3>
+      <h3 class="title">{{ name }}</h3>
     </div>
   </div>
 </template>
@@ -12,7 +11,9 @@ const props = defineProps({
   name:String,
 })
 </script>
+
 <style scoped>
+
 a {
   color: inherit;
   text-decoration: none;

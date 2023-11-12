@@ -1,11 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/base",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["./*.astro", "./**/*.ts"],
+  "exclude": ["node_modules/*", "./vite*.ts", "dist"],
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "module": "esnext",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "baseUrl": "src",
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "./dist",
     "jsx": "preserve"
-  },
-  "types": ["vue", "react"]
+  }
 }

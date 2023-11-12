@@ -1,6 +1,6 @@
 <template>
-  <h2 v-if="title">{{ title }}</h2>
-  <div class="title">
+  <h2 v-if="title" class="title">{{ title }}</h2>
+  <div class="text">
     <SanityPortableText :value="content"/>
   </div>
 </template>
@@ -16,8 +16,8 @@ const props = defineProps({
 
 <style scoped>
 
-.title {
-  padding-left: 10px;
+.text {
+  margin-left: 10px;
 }
 
 </style>

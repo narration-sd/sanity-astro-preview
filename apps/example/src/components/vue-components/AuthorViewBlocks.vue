@@ -44,4 +44,8 @@ const connection = computed(() => {
   margin-bottom: 1rem;
 }
 
+:deep(.title) {
+  color: darkblue;
+}
+
 </style>

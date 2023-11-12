@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 
-import {onErrorCaptured, onBeforeUpdate, onMounted, onBeforeMount} from "vue";
-import { getSanityImageURL } from "../../utils/helpers"
+import {onBeforeMount} from "vue";
+import { imageUrl } from "../../utils/helpers"
 
 const props = defineProps({
   imageObject:Object,
@@ -29,11 +29,6 @@ onBeforeMount(() => {
   }
 })
 
-const imageUrl = (sanityImage) => {
-    return sanityImage
-    ? getSanityImageURL(sanityImage).width(props.pipelineWidth).url()
-    : ''
-}
 </script>
 
 <style scoped>

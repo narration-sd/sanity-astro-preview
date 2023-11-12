@@ -13,12 +13,18 @@ const sanityClient = createClient(clientConfig)
 
 const builder = imageUrlBuilder(sanityClient)
 
-export function formatBlogPostDate(date) {
+export const formatBlogPostDate = (date) => {
   const dateString = parseISO(date, 'YYYY/MM/Do');
   const formattedDateString = format(dateString, 'MMMM do, yyyy');
   return `${formattedDateString}`;
 }
 
-export function getSanityImageURL(source) {
+export const imageUrl = (theImage: object, width:number) => {
+  const url = theImage
+    ? getSanityImageURL(theImage).width(width).url()
+    : ''
+  return url
+}
+export const getSanityImageURL = (source) => {
   return builder.image(source);
 }

@@ -14,11 +14,4 @@ const props = defineProps({
 
 <style scoped>
 
-:deep(.image-style) { /* Vue 3 magic so child will use this */
-  width: 100%;
-  max-width: 130px;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
 </style>

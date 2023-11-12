@@ -23,8 +23,6 @@ const props = defineProps({
   }
 })
 
-// console.log('dateblock pageData: ' + JSON.stringify(props.pageData))
-
 </script>
 
 <style scoped>

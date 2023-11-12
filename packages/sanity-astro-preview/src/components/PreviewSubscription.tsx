@@ -8,7 +8,10 @@ import { LiveQueryProvider, useLiveQuery } from '@sanity/preview-kit'
 import { ePreviewData, type PreviewType } from '../store/atomData.ts'
 
 export type PreviewKitConfig = {
+  isLive?:boolean,
   perspective?:string,
+  staticServer?:boolean,
+  studioBasePath?:string,
 }
 
 type InitData = {
@@ -134,12 +137,16 @@ export const PreviewSubscription = (props:SubscriptionProps) => {
   const {
     query= '',
     params = {},
-    clientConfig = { token: null},
+    clientConfig = { projectId: null, token: null},
     kitConfig = {
       perspective: 'previewDrafts',
     },
     show = false
   } = props
+
+  if (!clientConfig?.projectId) {
+    throw new Error ('clientConfig no projectId -- is config or .env file missing?')
+  }
 
   const [ initialData, setInitialData ] = useState(null);
   const [ queryError, setQueryError ] = useState(null);

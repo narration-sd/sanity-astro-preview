@@ -5,7 +5,7 @@ import {ePreviewData, type PreviewType} from '@narration-sd/sanity-astro-preview
 import {useStore} from '@nanostores/vue'
 
 import SanityPortableText from './SanityPortableText.vue'
-import { getSanityImageURL, formatBlogPostDate } from '../../utils/helpers'
+import { imageUrl, formatBlogPostDate } from '../../utils/helpers'
 
 // n.b. we use a usual v3 reactive form to get pageData and loading,
 // because Vue doesn't have an alias form so that previewData
@@ -17,12 +17,6 @@ const pageData = computed(() => {
 const loading = computed(() => {
   return pageDataRef.value.loading ? '(connecting...)' : ''
 })
-const imageUrl = (theAuthor) => {
-  const url = theAuthor.image
-      ? getSanityImageURL(theAuthor.image).width(360).url()
-      : ''
-  return url
-}
 
 </script>
 
@@ -33,7 +27,7 @@ const imageUrl = (theAuthor) => {
       <div class="theAuthor-block">
         <div class="theAuthor-row">
           <img class="theAuthor-main__img" loading="lazy"
-               :src="imageUrl(pageData)"/>
+               :src="imageUrl(pageData, 360)"/>
           <h3>{{ pageData.name }}</h3>
         </div>
       </div>
@@ -59,12 +53,14 @@ const imageUrl = (theAuthor) => {
 </template>
 
 <style scoped>
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-a:hover > .title {
+a:hover {
+  color: darkred;
   text-decoration: underline;
 }
 

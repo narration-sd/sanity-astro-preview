@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { PreviewSubscription } from '@narration-sd/sanity-astro-preview'
+import { PortableTextBlock } from '../components/react/PortableTextBlock'
+import { sanityClient } from "sanity:client"
+import { imageUrl, formatBlogPostDate} from '../utils/helpers'
+import { clientConfig, kitConfig } from '../../previewKitConfig'
+import '../styles/author.css'
+
+const query = `*[_type == $type ][0]{ ... }`
+const params = { type: 'author'}
+
+// in a dynamic page, you'd put your getStaticPaths here
+
+const isPreview = Astro.url.searchParams.get('preview') !== null
+const options = isPreview && kitConfig.perspective
+  ? { perspective: kitConfig.perspective }
+  : {}
+const liveLabel =  isPreview ? 'Preview' : 'as Production Server'
+const pageData = await sanityClient.fetch(query, params, options)
+  .catch(err => {
+  throw new Error('astro-page:fetch error: ' + err)
+})
+---
+<Layout>
+  <!-- you can add a 'show' prop, no value, to get on-page debugging -->
+  <PreviewSubscription
+    query={query}
+    params={params}
+    clientConfig={clientConfig}
+    kitConfig={kitConfig}
+    client:only="react"
+  />
+  <article class="theAuthor-preview__article">
+    <h2>Author (in Astro) ({liveLabel})</h2>
+    <div class="theAuthor-block">
+      <div class="theAuthor-row">
+        <img class="theAuthor-main__img" loading="lazy"
+             src={imageUrl(pageData?.image, 360)}/>
+        <h3>{pageData?.name}</h3>
+      </div>
+    </div>
+    <a href="{`/theAuthor/{pageData?.slug?.current}`" target="_blank">
+      {pageData._originalId ? 'Draft: ' : 'Published: '}
+    </a>
+    <time class="publish-date">
+      {formatBlogPostDate(pageData._updatedAt)}
+    </time>
+    <PortableTextBlock
+      title="Bio (react)"
+      ptData={pageData?.bio}
+      live={isPreview}
+      client:only="react"
+    />
+    <div>
+      <h3> Contacts</h3>
+      <div>
+        {
+          pageData?.contacts?.map((contact:string, index:number) => {
+            return <p key={index} class="contact">{contact}</p>
+          })
+        }
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+
+</style>

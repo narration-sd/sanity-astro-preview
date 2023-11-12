@@ -4,7 +4,7 @@ import {useStore} from '@nanostores/react'
 
 import {getSanityImageURL, formatBlogPostDate} from '../../utils/helpers'
 import SanityPortableText from './SanityPortableText.tsx'
-import './author.css' // *todo a rather temporary measure...
+import '../../styles/author.css' // *todo a rather temporary measure...
 
 export const AuthorView = (props: any) => {
   const {

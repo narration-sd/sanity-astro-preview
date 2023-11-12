@@ -1,4 +1,6 @@
 import { defineConfig } from 'astro/config';
+import { sanityIntegration } from "@sanity/astro";
+import 'sanity'
 
 import vue from "@astrojs/vue";
 import svelte from "@astrojs/svelte";
@@ -7,9 +9,20 @@ import react from "@astrojs/react";
 import netlify from '@astrojs/netlify/functions';
 import tailwind from "@astrojs/tailwind";
 
-export default defineConfig({
+import { clientConfig, kitConfig } from "./previewKitConfig";
 
+const integrationConfig =
+  kitConfig.isLive && kitConfig.perspective
+    ? Object.assign(clientConfig, {
+      perspective: kitConfig?.perspective,
+      useCdn: false, // so our images can edit rapidly
+    })
+    : clientConfig
+
+export default defineConfig({
   integrations: [
+
+    sanityIntegration(integrationConfig),
     vue({
       include: ['**/vue-components/*']
     }),
@@ -23,7 +36,7 @@ export default defineConfig({
       include: ['**/react/*', 'layouts/PageLayout.tsx']
     }),
     // tailwind()
-  ]
-  // output: 'server',
-  // adapter: netlify(),
+  ],
+  output: kitConfig.staticServer === 'true' ? 'static' : 'hybrid',
+  adapter: netlify(),
 });
