@@ -37,6 +37,6 @@ export default defineConfig({
     }),
     // tailwind()
   ],
-  output: kitConfig.staticServer === 'true' ? 'static' : 'hybrid',
+  output: kitConfig.staticServer === 'true' ? 'static' : 'server',
   adapter: netlify(),
 });
