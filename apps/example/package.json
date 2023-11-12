@@ -21,7 +21,7 @@
     "@nanostores/react": "^0.7.1",
     "@nanostores/solid": "^0.4.2",
     "@nanostores/vue": "^0.10.0",
-    "@narration-sd/sanity-astro-preview": "*",
+    "@narration-sd/sanity-astro-preview": "^0.3.3",
     "@portabletext/to-html": "^2.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@sanity/astro": "^2.1.4",
