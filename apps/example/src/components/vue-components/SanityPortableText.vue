@@ -1,22 +1,16 @@
 <template>
-  <div>
-<!--    <h2>SPT Text</h2>-->
-<!--    <h4>(unresolved jsx formatter, so nothing yet...)</h4>-->
-    <div v-html="theHtml"></div>
-  </div>
+  <div v-html="theHtml"></div>
 </template>
 
-<script>
-
+<script lang="ts">
 import { sanityPortableText } from "../../lib/sanityPortableText";
-import { toRefs, computed, Fragment } from 'vue'
+import { toRefs, computed } from 'vue'
+
 export default {
   setup(props) {
-
     const { value } =  toRefs(props)
     const theHtml = computed (() => {
-      const htmlText = sanityPortableText(value.value)
-      return htmlText
+      return sanityPortableText(value.value)
     })
     return { theHtml }
   },
@@ -24,9 +18,6 @@ export default {
   props: {
     value:Object,
   },
-  components: {
-    Fragment
-  }
 }
 </script>
 
