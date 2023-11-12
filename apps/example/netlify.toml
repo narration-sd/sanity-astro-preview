@@ -1,9 +1,10 @@
 [build]
   command = "npm run build"
   framework = "astro"
-  functions = "netlify/functions"
+  base = "/"
+  publish = "dist/"
+#  functions = "netlify/functions"
 #  functions = "functions" # netlify dev uses this directory to scaffold and serve your functions
-  publish = "/dist"
 
 [build.processing]
   skip_processing = false
