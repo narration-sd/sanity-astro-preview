@@ -26,3 +26,5 @@ pnpm-debug.log*
 
 # build systems
 .turbo/
+
+.vercel

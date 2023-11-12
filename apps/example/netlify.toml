@@ -2,7 +2,7 @@
   command = "npm run build"
   framework = "astro"
   base = "/"
-  publish = "dist/"
+  publish = "/dist/apps/example"
 #  functions = "netlify/functions"
 #  functions = "functions" # netlify dev uses this directory to scaffold and serve your functions
 
