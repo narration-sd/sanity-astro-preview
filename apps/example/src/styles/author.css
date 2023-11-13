@@ -64,6 +64,10 @@ a:hover {
   /*color: var(--theme-text);*/
 }
 
+.caption {
+
+}
+
 .subtitle {
   color: darkred;
 }

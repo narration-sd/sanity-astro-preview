@@ -1,10 +1,10 @@
 import SanityPortableText from './SanityPortableText'
 import {useStore} from "@nanostores/react";
-import {imageUrl} from "../../utils/helpers"
+import {formatBlogPostDate, imageUrl} from "../../utils/helpers"
 
 import {ePreviewData} from "@narration-sd/sanity-astro-preview";
 
-const fromPage = (live: boolean, dataField: string, pageData: {}) => {
+const fromPage = (live: boolean, dataField: string, pageData:object) => {
   const storeData = useStore(ePreviewData)
   const content = live
     ? storeData?.previewData[dataField]
@@ -48,7 +48,7 @@ export const PortableText = (props:PTProps) => {
 
   const { pageData = {}, dataField,  live = false,
     title, styles = {} } = props
-  const content= fromPage (live, dataField, pageData)
+  const content = fromPage (live, dataField, pageData)
 
   // *todo* temporary for initial demo
   const titleNote = live
@@ -81,7 +81,6 @@ interface ImageBlockProps {
 }
 
 export const SanityImage = (props:ImageBlockProps) => {
-  
   const { pageData, dataField, live = false,
     pipelineWidth, alt = 'Image', styles = {} } = props
 
@@ -102,7 +101,7 @@ export const SanityImage = (props:ImageBlockProps) => {
   }, styles)
 
   let errReported
-
+  // for more twitchy content, we need this kind of thing
   if (!props.pipelineWidth) {
     const msg = 'SanityImage: you need to provide a pipelineWidth prop ' +
       'to set size on the Sanity image pipeline...'
@@ -124,4 +123,69 @@ export const SanityImage = (props:ImageBlockProps) => {
         }
       </div>
     )
+}
+
+export type RHCaptionType = {
+  name:string,
+  live:boolean,
+  children:any
+}
+
+export const RowHorizontalCaption = (props:RHCaptionType) => {
+  // *todo* actually, make this into a true child-enumerating rows container, combinable
+  const { name, children, live } = props
+  return (
+    <div className="theAuthor-block">
+      <div className="theAuthor-row">
+        <div>{children}</div>
+        <div>
+          <h3 className="caption">{name}</h3>
+          <div> {/* *todo* this block is temporary, only for initial demo*/}
+            { live && <h4 style={{color:"darkred"}}>(live<br/>preview)</h4> }
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const PageStatusDate = (props) => {
+  const { pageData } = props
+  return (
+    <>
+      <a href="{`/theAuthor/{pageData?.slug?.current}`" target="_blank">
+        {pageData._originalId ? 'Draft: ' : 'Published: '}
+      </a>
+      <time className="publish-date">
+        {formatBlogPostDate(pageData._updatedAt)}
+      </time>
+    </>
+  )
+}
+
+export type TextListType = {
+  pageData: object,
+  dataField: string,
+  live: boolean,
+  class?: string
+}
+export const TextList = (props) => {
+
+  const { pageData = {}, dataField, live, styleClass="" } = props
+  const content = fromPage (live, dataField, pageData)
+  // *todo* these and its use span temporary only, for demo!
+  const liveMsg = live ? '(live preview)' : ''
+  const liveStyle = { color: 'darkred' }
+  return (
+    <div>
+      <h3>Contacts <span style={liveStyle}>{liveMsg}</span></h3>
+      <div>
+        { content &&
+          content.map((item: string, index: number) => {
+            return <p key={index} className={styleClass}>{item}</p>
+          })
+        }
+      </div>
+    </div>
+  )
 }
