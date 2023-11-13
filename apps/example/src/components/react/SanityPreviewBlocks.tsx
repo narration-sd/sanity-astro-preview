@@ -4,11 +4,36 @@ import {imageUrl} from "../../utils/helpers"
 
 import {ePreviewData} from "@narration-sd/sanity-astro-preview";
 
-function fromPage (live: boolean, dataField: string, pageData: {}) {
+const fromPage = (live: boolean, dataField: string, pageData: {}) => {
+  const storeData = useStore(ePreviewData)
   const content = live
-    ? useStore(ePreviewData)?.previewData[dataField]
+    ? storeData?.previewData[dataField]
     : pageData[dataField]
-  return content;
+  return content
+}
+
+export type PageTitleType = {
+  title: string,
+  note?:string,
+  live?: boolean,
+  style?: object,
+  msg?: string,
+  msgStyle?:object
+}
+
+export const PageTitle = (props:PageTitleType) => {
+
+  const { title, note = '', style = {},
+    msg = '(connecting...)', msgStyle = {},
+    live } = props
+  const loading = useStore(ePreviewData).loading
+  const liveLabel = (live && loading) ? msg : ''
+  const styles = Object.assign({}, style)
+  const msgStyles =
+    Object.assign({ color: 'blue', fontSize: 'smaller' }, msgStyle)
+  return (
+    <h2 style={styles}>{title} {note} <span style={msgStyles}>{liveLabel}</span></h2>
+  )
 }
 
 export type PTProps = {
@@ -23,8 +48,7 @@ export const PortableText = (props:PTProps) => {
 
   const { pageData = {}, dataField,  live = false,
     title, styles = {} } = props
-
-  const content = fromPage (live, dataField, pageData);
+  const content= fromPage (live, dataField, pageData)
 
   // *todo* temporary for initial demo
   const titleNote = live
@@ -86,7 +110,7 @@ export const SanityImage = (props:ImageBlockProps) => {
     errReported = msg
   }
 
-  const content = fromPage (live, dataField, pageData);
+  const content = fromPage (live, dataField, pageData)
 
   return (
       <div>

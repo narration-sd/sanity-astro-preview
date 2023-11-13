@@ -12,7 +12,7 @@ const params = { type: 'author'}
 
 // in a subject/[slug] page, you'd put your getStaticPaths here
 
-const isPreview = Astro.url.searchParams.get('preview') !== null
+const isPreview = Astro.url.searchParams.has('preview')
 const options = isPreview && kitConfig.perspective
   ? { perspective: kitConfig.perspective }
   : {}
@@ -21,6 +21,7 @@ const pageData = await sanityClient.fetch(query, params, options)
   .catch(err => {
     throw new Error('astro-page:fetch error: ' + err)
   })
+
 ---
 <Layout>
   <!-- you can add a 'show' prop, no value, to get on-page debugging -->

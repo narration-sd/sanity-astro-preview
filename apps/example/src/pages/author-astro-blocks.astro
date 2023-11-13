@@ -5,19 +5,18 @@ import { PortableTextBlock } from '../components/react/PortableTextBlock'
 import { sanityClient } from "sanity:client"
 import { imageUrl, formatBlogPostDate} from '../utils/helpers'
 import { clientConfig, kitConfig } from '../../previewKitConfig'
-import { SanityImage, PortableText } from '../components/react/SanityPreviewBlocks'
+import { SanityImage, PortableText, PageTitle  } from '../components/react/SanityPreviewBlocks'
 import '../styles/author.css'
 
 const query = `*[_type == $type ][0]{ ... }`
 const params = { type: 'author'}
 
 // in a subject/[slug] page, you'd put your getStaticPaths here
-
-const isPreview = Astro.url.searchParams.get('preview') !== null
+const isPreview = Astro.url.searchParams.has('preview')
 const options = isPreview && kitConfig.perspective
   ? { perspective: kitConfig.perspective }
   : {}
-const liveLabel =  isPreview ? 'Preview' : 'as Production Server'
+const liveLabel =  isPreview ? '(Preview)' : '(as Production Server)'
 const pageData = await sanityClient.fetch(query, params, options)
   .catch(err => {
     throw new Error('astro-page:fetch error: ' + err)
@@ -33,21 +32,18 @@ const pageData = await sanityClient.fetch(query, params, options)
     client:only="react"
   />
   <article class="theAuthor-preview__article">
-    <h2>Author (in Astro Blocks) ({liveLabel})</h2>
+    <PageTitle title="Author (in Astro Blocks)" note={liveLabel}
+               live={isPreview} client:only="react" />
     <div class="theAuthor-block">
       <div class="theAuthor-row">
        <SanityImage
-          pageData={pageData}
-          dataField="image"
-          live={isPreview}
-          pipelineWidth={360}
-          alt="Author's photo"
+         pageData={pageData} dataField="image" live={isPreview}
+         pipelineWidth={360} alt="Author's photo"
           styles={{imageStyle:{maxWidth: '120px' }}}
-          client:only="react"
-        />
-        <div> <!-- *todo* temporary only, just for demo clarity -->
+         client:only="react" />
+        <div> <!-- *todo* this block temporary only, just for demo clarity -->
           <h3>{pageData?.name}</h3>
-          <h4 style="color:darkred;">(live<br>preview)</h4>
+          <div>{isPreview && <h4 style="color:darkred;">(live<br>preview)</h4> }</div>
         </div>
       </div>
     </div>
@@ -57,13 +53,8 @@ const pageData = await sanityClient.fetch(query, params, options)
     <time class="publish-date">
       {formatBlogPostDate(pageData._updatedAt)}
     </time>
-    <PortableText
-      title="Bio (react)"
-      ptData={pageData}
-      live={isPreview},
-      dataField="bio"
-      client:only="react"
-    />
+    <PortableText title="Bio (react)" pageData={pageData}
+      live={isPreview}, dataField="bio" client:only="react" />
     <div>
       <h3> Contacts</h3>
       <div>

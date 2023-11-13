@@ -4,7 +4,8 @@ export type SPTprops = {
   value: object
 }
 
-export default function SanityPortableText(props:SPTprops) {
+// *todo* goes hidden in blocks once not needed for demo
+const SanityPortableText = (props:SPTprops) => {
     const {value} = props
     const theHtml = () => {
         const htmlText = sanityPortableText(value)
@@ -13,3 +14,5 @@ export default function SanityPortableText(props:SPTprops) {
 
     return <div dangerouslySetInnerHTML={theHtml()}/>
 }
+
+export default SanityPortableText
