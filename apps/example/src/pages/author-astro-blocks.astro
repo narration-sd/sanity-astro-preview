@@ -5,6 +5,7 @@ import { PortableTextBlock } from '../components/react/PortableTextBlock'
 import { sanityClient } from "sanity:client"
 import { imageUrl, formatBlogPostDate} from '../utils/helpers'
 import { clientConfig, kitConfig } from '../../previewKitConfig'
+import { SanityImage, PortableText } from '../components/react/SanityPreviewBlocks'
 import '../styles/author.css'
 
 const query = `*[_type == $type ][0]{ ... }`
@@ -32,12 +33,22 @@ const pageData = await sanityClient.fetch(query, params, options)
     client:only="react"
   />
   <article class="theAuthor-preview__article">
-    <h2>Author (in Astro) ({liveLabel})</h2>
+    <h2>Author (in Astro Blocks) ({liveLabel})</h2>
     <div class="theAuthor-block">
       <div class="theAuthor-row">
-        <img class="theAuthor-main__img" loading="lazy"
-             src={imageUrl(pageData?.image, 360)}/>
-        <h3>{pageData?.name}</h3>
+       <SanityImage
+          pageData={pageData}
+          dataField="image"
+          live={isPreview}
+          pipelineWidth={360}
+          alt="Author's photo"
+          styles={{imageStyle:{maxWidth: '120px' }}}
+          client:only="react"
+        />
+        <div> <!-- *todo* temporary only, just for demo clarity -->
+          <h3>{pageData?.name}</h3>
+          <h4 style="color:darkred;">(live<br>preview)</h4>
+        </div>
       </div>
     </div>
     <a href="{`/theAuthor/{pageData?.slug?.current}`" target="_blank">
@@ -46,11 +57,11 @@ const pageData = await sanityClient.fetch(query, params, options)
     <time class="publish-date">
       {formatBlogPostDate(pageData._updatedAt)}
     </time>
-    <PortableTextBlock
+    <PortableText
       title="Bio (react)"
-      pageData={pageData}
-      dataField="bio"
+      ptData={pageData}
       live={isPreview},
+      dataField="bio"
       client:only="react"
     />
     <div>

@@ -8,16 +8,17 @@ const blockStyle = {
 
 export type PTProps = {
   live?:boolean,
+  dataField:string,
   title:string,
-  ptData?:object
+  pageData?:object
 }
 export const PortableTextBlock = (props:PTProps) => {
 
-  const { live = false, title, ptData = {} } = props
+  const { live = false, dataField, title, pageData = {} } = props
 
   const content = live
-    ? useStore(ePreviewData)?.previewData?.bio
-    : ptData
+    ? useStore(ePreviewData)?.previewData[dataField]
+    : pageData[dataField]
 
   const titleNote = live
     ? 'Live Preview - refresh to preview others'

@@ -1,6 +1,10 @@
 import {sanityPortableText} from "../../lib/sanityPortableText";
 
-export default function SanityPortableText(props) {
+export type SPTprops = {
+  value: object
+}
+
+export default function SanityPortableText(props:SPTprops) {
     const {value} = props
     const theHtml = () => {
         const htmlText = sanityPortableText(value)
