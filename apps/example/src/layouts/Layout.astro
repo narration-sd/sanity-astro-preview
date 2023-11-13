@@ -17,7 +17,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 
-	<body>
+	<body class="layout">
 		<Navbar />
 		<slot />
 	</body>
@@ -36,4 +36,13 @@ const { title } = Astro.props;
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
 	}
+  body {
+    max-width: 45%;
+    @media only screen and (max-width:1200px) {
+      max-width: 600px;
+    }
+    @media only screen and  (max-width: 701px) {
+     max-width: 90%;
+    }
+  }
 </style>
