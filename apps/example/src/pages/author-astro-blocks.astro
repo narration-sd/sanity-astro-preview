@@ -33,9 +33,9 @@ const pageData = await sanityClient.fetch(query, params, options)
   <article class="theAuthor-preview__article">
     <PageTitle title="Author (in Astro Blocks)" note={liveLabel}
                live={isPreview} client:only="react" />
-    <RowHorizontalCaption name={pageData.name} live={isPreview} client:only="react">
-      <SanityImage
-        pageData={pageData} dataField="image" live={isPreview}
+    <RowHorizontalCaption name={pageData.name}
+               live={isPreview} client:only="react">
+      <SanityImage pageData={pageData} dataField="image" live={isPreview}
         pipelineWidth={360} alt="Author's photo"
         styles={{imageStyle:{ maxWidth: '120px' }}} client:only="react" />
     </RowHorizontalCaption>
