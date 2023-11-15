@@ -20,5 +20,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [dts(), react(/*{include: /\.(mdx|js|jsx|ts|tsx)$/ }*/)],
+  plugins: [dts(), react({include: /\.(mdx|js|jsx|ts|tsx)$/ })],
 });

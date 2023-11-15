@@ -19,11 +19,22 @@ export const formatBlogPostDate = (date) => {
   return `${formattedDateString}`;
 }
 
-export const imageUrl = (theImage: object, width:number) => {
-  const url = theImage
-    ? getSanityImageURL(theImage).width(width).url()
+export const imageUrl = (
+  theImage: object,
+  width?:number,
+  height?: number):string => {
+
+  let urlBase = getSanityImageURL(theImage)
+  if (width) {
+    urlBase = urlBase.width(width)
+  }
+  if (height) {
+    urlBase = urlBase.height(height)
+  }
+
+  return theImage
+    ? urlBase.url()
     : ''
-  return url
 }
 export const getSanityImageURL = (source) => {
   return builder.image(source);

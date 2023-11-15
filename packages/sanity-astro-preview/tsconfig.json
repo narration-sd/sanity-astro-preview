@@ -18,8 +18,15 @@
     "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    /* Plugins */
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+    ]
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "extends": "astro/tsconfigs/base"
 }

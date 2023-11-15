@@ -17,7 +17,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 
-	<body>
+	<body class="grid">
 		<Navbar />
 		<slot />
 	</body>
@@ -38,11 +38,25 @@ const { title } = Astro.props;
 	}
   body {
     max-width: 45%;
-    @media only screen and (max-width:1200px) {
+    @media only screen and (max-width: 1200px) {
       max-width: 600px;
     }
     @media only screen and  (max-width: 701px) {
-     max-width: 90%;
+      max-width: 90%;
+    }
+  }
+  .grid {
+    grid-auto-flex: column;
+    padding: 5px;
+    width: 95%;
+  }
+  .wide-things { // for now, this demo
+    max-width: 45%;
+    @media only screen and (max-width:1200px) {
+      max-width: 600px;
+    }
+    @media only screen and (max-width: 701px) {
+      max-width: 100%;
     }
   }
 </style>

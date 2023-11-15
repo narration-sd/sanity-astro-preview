@@ -64,14 +64,14 @@ export const PortableText = (props:PTProps) => {
       {
         title && <h3 className={"subtitle"}>{title} ({titleNote})</h3>
       }
-      <div style={blockStyle}>
+      <div style={blockStyle} className="wide-things">
         <SanityPortableText value={content} />
       </div>
     </>
   )
 }
 
-interface ImageBlockProps {
+interface PictureBlockProps {
   pageData:Object,
   dataField:string,
   live:boolean,
@@ -80,7 +80,7 @@ interface ImageBlockProps {
   styles?:object,
 }
 
-export const SanityImage = (props:ImageBlockProps) => {
+export const SanityImage = (props:PictureBlockProps) => {
   const { pageData, dataField, live = false,
     pipelineWidth, alt = 'Image', styles = {} } = props
 
@@ -167,18 +167,19 @@ export type TextListType = {
   pageData: object,
   dataField: string,
   live: boolean,
+  name: string,
   class?: string
 }
 export const TextList = (props) => {
 
-  const { pageData = {}, dataField, live, styleClass="" } = props
+  const { pageData = {}, dataField, name, live, styleClass="" } = props
   const content = fromPage (live, dataField, pageData)
   // *todo* these and its use span temporary only, for demo!
   const liveMsg = live ? '(live preview)' : ''
   const liveStyle = { color: 'darkred' }
   return (
     <div>
-      <h3>Contacts <span style={liveStyle}>{liveMsg}</span></h3>
+      <h3>{name} <span style={liveStyle}>{liveMsg}</span></h3>
       <div>
         { content &&
           content.map((item: string, index: number) => {
@@ -186,6 +187,83 @@ export const TextList = (props) => {
           })
         }
       </div>
+    </div>
+  )
+}
+
+
+interface PictureBlockProps {
+  pageData:Object,
+  dataField:string,
+  live:boolean,
+  pipelineWidth:number,
+  title:string,
+  caption:string,
+  alt?:string,
+  styles?:object,
+  sources:{
+    mq:string,
+    w:number,
+    h?:number,
+    x?:string
+  }[]
+}
+
+export const SanityPicture = (props:PictureBlockProps) => {
+  const {
+    pageData, dataField, live = false,
+    pipelineWidth, sources,
+    title = '', caption = '',
+    alt = 'Image', styles = {}
+  } = props
+
+  const plwidth:number = 400
+  const plheight:number = 200
+  const mediaString = "min-width: 400px"
+  const mediaQuery = '(' + mediaString + ')'
+
+  // *todo* styling should be outside, it looks; likely some other blocks also
+
+  const liveMsg = live ? '(live)' : ''
+  const liveStyle = { color: 'darkred' }
+
+  let errReported
+  // for more twitchy content, we need this kind of thing
+  if (!props.pipelineWidth) {
+    const msg = 'SanityImage: you need to provide a pipelineWidth prop ' +
+      'to set size on the Sanity image pipeline...'
+    console.error(msg)
+    errReported = msg
+  }
+
+  const content = fromPage (live, dataField, pageData)
+
+  const sourceList = sources.map((source) => {
+    return <source srcSet={imageUrl(content, source.w, source.h)}
+                   media={source.mq}
+                   key={source.mq}
+    />
+  })
+
+  return (
+    <div>
+      {
+        !errReported
+          ? <>
+              { title && <h3>{title} <span style={liveStyle}>{liveMsg}</span></h3>}
+            <picture>
+            {sourceList}
+                <img loading="lazy"
+                     src={imageUrl(content)}
+                     className="wide-things" // more control, resolve...
+                     style={{ width: '100%' }} // stay within bounds....
+                     alt={alt}
+                />
+              </picture>
+              { caption && <p style={{ textAlign: 'center'}}>{caption}</p> }
+            </>
+          : <h3 className="warn">{errReported}</h3>
+      }
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { sanityClient } from "sanity:client"
 import { imageUrl, formatBlogPostDate} from '../utils/helpers'
 import { clientConfig, kitConfig } from '../../previewKitConfig'
 import { SanityImage, PortableText, PageTitle, RowHorizontalCaption,
-  PageStatusDate, TextList } from '../components/react/SanityPreviewBlocks'
+  PageStatusDate, TextList, SanityPicture } from '../components/react/SanityPreviewBlocks'
 import '../styles/author.css'
 
 const query = `*[_type == $type ][0]{ ... }`
@@ -22,6 +22,11 @@ const pageData = await sanityClient.fetch(query, params, options)
   .catch(err => {
     throw new Error('astro-page:fetch error: ' + err)
   })
+const picSources = [
+  { mq: '(max-width: 600px)', w: 400, h: 155 },
+  { mq: '(max-width: 800px)', w: 600, h: 400 },
+  { mq: '(max-width: 1070px)', w: 800, h: 800 },
+]
 ---
 <Layout>
   <!-- you can add a 'show' prop, no value, to get on-page debugging -->
@@ -42,7 +47,12 @@ const pageData = await sanityClient.fetch(query, params, options)
     <PageStatusDate pageData={pageData}/>
     <PortableText title="Bio (react)" pageData={pageData}
       live={isPreview}, dataField="bio" client:only="react" />
-    <TextList pageData={pageData} dataField="contacts"
+    <TextList pageData={pageData} dataField="contacts" name="Contacts"
       live={isPreview} styleClass="contact" client:only="react"/>
+    <br>
+    <SanityPicture pageData={pageData} dataField="image" live={isPreview}
+      pipelineWidth={360} alt="Author's photo" sources={picSources}
+      title="Billy with Art Direction"
+      caption="from The Year of Lving Dangerously" client:only="react" />
   </article>
 </Layout>

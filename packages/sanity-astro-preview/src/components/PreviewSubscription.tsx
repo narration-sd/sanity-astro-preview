@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import type { CSSProperties } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { createClient, QueryParams, type ClientConfig } from '@sanity/client'
+import { createClient, type QueryParams, type ClientConfig } from '@sanity/client'
 import { LiveQueryProvider, useLiveQuery } from '@sanity/preview-kit'
 
 import { ePreviewData, type PreviewType } from '../store/atomData.ts'
