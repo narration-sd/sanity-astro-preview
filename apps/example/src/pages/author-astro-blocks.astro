@@ -6,7 +6,8 @@ import { sanityClient } from "sanity:client"
 import { imageUrl, formatBlogPostDate} from '../utils/helpers'
 import { clientConfig, kitConfig } from '../../previewKitConfig'
 import { SanityImage, PortableText, PageTitle, RowHorizontalCaption,
-  PageStatusDate, TextList, SanityPicture } from '../components/react/SanityPreviewBlocks'
+  PageStatusDate, TextList, SanityPicture, type PictureSources }
+  from '../components/react/SanityPreviewBlocks'
 import '../styles/author.css'
 
 const query = `*[_type == $type ][0]{ ... }`
@@ -22,7 +23,8 @@ const pageData = await sanityClient.fetch(query, params, options)
   .catch(err => {
     throw new Error('astro-page:fetch error: ' + err)
   })
-const picSources = [
+
+const picSources:PictureSources = [
   { mq: '(max-width: 600px)', w: 400, h: 155 },
   { mq: '(max-width: 800px)', w: 600, h: 400 },
   { mq: '(max-width: 1070px)', w: 800, h: 800 },
@@ -50,9 +52,12 @@ const picSources = [
     <TextList pageData={pageData} dataField="contacts" name="Contacts"
       live={isPreview} styleClass="contact" client:only="react"/>
     <br>
-    <SanityPicture pageData={pageData} dataField="image" live={isPreview}
-      pipelineWidth={360} alt="Author's photo" sources={picSources}
-      title="Billy with Art Direction"
-      caption="from The Year of Lving Dangerously" client:only="react" />
+    <!-- demo if uncommented, that .astro can format the Picture... -->
+    <!--<div style={{ width: '80%', margin: '0 10%' }}>-->
+      <SanityPicture pageData={pageData} dataField="image"
+        sources={picSources} live={isPreview}
+        alt="Author's photo" title="Billy with Art Direction"
+        caption="from The Year of Lving Dangerously" client:only="react" />
+    <!--</div>-->
   </article>
 </Layout>

@@ -191,59 +191,55 @@ export const TextList = (props) => {
   )
 }
 
+export type PictureSources = {
+    mq:string,
+    w:number,
+    h?:number,
+    field?:string,
+}[]
 
 interface PictureBlockProps {
   pageData:Object,
   dataField:string,
-  live:boolean,
-  pipelineWidth:number,
-  title:string,
-  caption:string,
+  live?:boolean,
   alt?:string,
-  styles?:object,
-  sources:{
-    mq:string,
-    w:number,
-    h?:number,
-    x?:string
-  }[]
+  sources?:PictureSources,
+  title?:string,
+  caption:string,
 }
 
 export const SanityPicture = (props:PictureBlockProps) => {
   const {
     pageData, dataField, live = false,
-    pipelineWidth, sources,
+    sources = {}, alt = 'Image',
     title = '', caption = '',
-    alt = 'Image', styles = {}
   } = props
 
-  const plwidth:number = 400
-  const plheight:number = 200
-  const mediaString = "min-width: 400px"
-  const mediaQuery = '(' + mediaString + ')'
-
-  // *todo* styling should be outside, it looks; likely some other blocks also
-
+  // normal styling should be outside, it looks; likely some other blocks also
+  // *todo* this is just for demo
   const liveMsg = live ? '(live)' : ''
   const liveStyle = { color: 'darkred' }
 
   let errReported
-  // for more twitchy content, we need this kind of thing
-  if (!props.pipelineWidth) {
-    const msg = 'SanityImage: you need to provide a pipelineWidth prop ' +
-      'to set size on the Sanity image pipeline...'
-    console.error(msg)
-    errReported = msg
+  // need for errors seems designed out at present, as component simplifies
+  // down, but it's a subtly complex part, so left this w/harness in, so we
+  // could set it should cases develop. Like w/array refs, on following...
+
+  // *todo* yet to be tried, array refs, thinking about branching/interp here
+  // note careful uses of default, places this is applied
+  const content = (field?:string) => {
+    return fromPage (live, field ? field: dataField, pageData)
   }
 
-  const content = fromPage (live, dataField, pageData)
-
-  const sourceList = sources.map((source) => {
-    return <source srcSet={imageUrl(content, source.w, source.h)}
-                   media={source.mq}
-                   key={source.mq}
-    />
-  })
+  const sourceList = Object.keys(sources ).length > 0
+    ? sources.map((source) => {
+        return <source
+          srcSet={imageUrl(content(source.field), source.w, source.h)}
+          media={source.mq}
+          key={source.mq}
+        />
+      })
+    : '' // null would be ok, but empty character feels safer
 
   return (
     <div>
@@ -251,10 +247,10 @@ export const SanityPicture = (props:PictureBlockProps) => {
         !errReported
           ? <>
               { title && <h3>{title} <span style={liveStyle}>{liveMsg}</span></h3>}
-            <picture>
-            {sourceList}
+              <picture>
+                {sourceList}
                 <img loading="lazy"
-                     src={imageUrl(content)}
+                     src={imageUrl(content())}
                      className="wide-things" // more control, resolve...
                      style={{ width: '100%' }} // stay within bounds....
                      alt={alt}
