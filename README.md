@@ -8,7 +8,7 @@ The next revision will offer a lot -- let's say leadnig with much simpler ways o
 
 Until then, then :)
 
-## Published
+## Published, but same n.b., very out of date now, and will be replaced
 
 The package this repo includes and is based on has now been published on NpmJs, so you can install it directly in your projects.
 
