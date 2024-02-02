@@ -4,7 +4,7 @@
 
 I've left this up for politeness, but development is very advanced past this point, so please don't use this codebase for anything now.
 
-The next revision will offer a lot -- let's say leadnig with much simpler ways of working with your Astro pages as they are -- and an already nicely running implementaton for you of Sanity's Presentation, click-to-instant Live Preview editing...
+The next revision will offer a lot -- let's say leading with much simpler ways of working with your Astro pages as they are -- and an already nicely running implementaton for you of Sanity's Presentation, click-to-instant Live Preview editing...
 
 Until then, then :)
 
